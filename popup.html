@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AWS Pricing Calculator 助手</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>AWS Pricing Calculator 助手</h1>
+      </div>
+      <div class="main">
+        <div id="currentService" class="current-service">
+          當前服務: 載入中...
+        </div>
+        <div class="description">
+          <p>請使用自然語言描述您需要的 AWS 服務配置：</p>
+        </div>
+        <div class="input-container">
+          <textarea
+            id="userInput"
+            placeholder="例如：我需要 5 台 t3.medium EC2 實例和 1 個具有 100GB 儲存空間的 RDS MySQL 資料庫"
+          ></textarea>
+        </div>
+        <div class="button-container">
+          <button id="processBtn">生成估算</button>
+        </div>
+        <div class="status-container">
+          <div id="statusMessage"></div>
+          <div id="loadingIndicator" class="hidden">處理中...</div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>此擴展程式僅在 AWS Pricing Calculator 頁面上有效</p>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

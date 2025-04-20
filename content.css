@@ -1,0 +1,30 @@
+/* AWS Pricing Calculator 助手的樣式 */
+#aws-calculator-assistant * {
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+/* 確保我們的樣式不會被頁面其他樣式覆蓋 */
+#aws-calculator-assistant {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10000;
+  font-size: 14px;
+}
+
+/* 防止頁面樣式影響我們的按鈕 */
+#aws-calculator-assistant button {
+  background-image: none;
+  text-shadow: none;
+}
+
+/* 強制使用我們的文本樣式 */
+#aws-calculator-assistant input, 
+#aws-calculator-assistant textarea,
+#aws-calculator-assistant button,
+#aws-calculator-assistant p,
+#aws-calculator-assistant span,
+#aws-calculator-assistant div {
+  font-family: 'Arial', sans-serif !important;
+} 

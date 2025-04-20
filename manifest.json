@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "AWS Pricing Calculator 助手",
+  "version": "1.0",
+  "description": "使用自然語言來設定 AWS 服務並估算價格",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://calculator.aws/*",
+    "https://api.openai.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://calculator.aws/*"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+} 

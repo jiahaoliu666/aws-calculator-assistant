@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>歡迎使用 AWS Pricing Calculator 助手</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .header img {
+        width: 120px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      .header h1 {
+        font-size: 28px;
+        color: #232f3e;
+        margin: 0;
+      }
+
+      .header p {
+        font-size: 16px;
+        color: #666;
+        margin: 10px 0 0 0;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .card h2 {
+        font-size: 20px;
+        color: #232f3e;
+        margin: 0 0 20px 0;
+      }
+
+      .card p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 0 0 20px 0;
+      }
+
+      .feature-list {
+        padding-left: 20px;
+      }
+
+      .feature-list li {
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
+
+      .button {
+        display: inline-block;
+        background-color: #ff9900;
+        color: white;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 10px;
+        text-align: center;
+      }
+
+      .button:hover {
+        background-color: #e88a00;
+      }
+
+      .button-container {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .steps {
+        counter-reset: step-counter;
+        padding-left: 0;
+        list-style-type: none;
+      }
+
+      .steps li {
+        position: relative;
+        padding-left: 40px;
+        margin-bottom: 20px;
+        counter-increment: step-counter;
+      }
+
+      .steps li:before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: #ff9900;
+        color: white;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 50px;
+        color: #666;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="images/icon128.png" alt="AWS Pricing Calculator 助手" />
+        <h1>歡迎使用 AWS Pricing Calculator 助手</h1>
+        <p>讓 AWS 價格計算變得更簡單</p>
+      </div>
+
+      <div class="card">
+        <h2>關於此擴展程式</h2>
+        <p>
+          AWS Pricing Calculator 助手讓您能夠使用自然語言描述需求，自動在 AWS
+          Pricing Calculator 上進行價格估算，無需手動填寫複雜的表單。
+        </p>
+
+        <h2>主要功能</h2>
+        <ul class="feature-list">
+          <li>透過自然語言輸入直接估算 AWS 服務價格</li>
+          <li>自動識別常見 AWS 服務的需求描述</li>
+          <li>支援 EC2、RDS、S3 等多種 AWS 服務</li>
+          <li>無縫整合到 AWS Pricing Calculator 頁面</li>
+          <li>簡單直觀的使用者界面</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>開始使用</h2>
+        <ol class="steps">
+          <li>
+            前往
+            <a href="https://calculator.aws" target="_blank"
+              >AWS Pricing Calculator</a
+            >
+            網站
+          </li>
+          <li>點擊瀏覽器工具列中的擴展程式圖標或頁面右下角的 AWS 助手按鈕</li>
+          <li>
+            用自然語言描述您的 AWS 服務需求，例如「我需要 5 台 t3.medium EC2
+            實例和 1 個具有 100GB 儲存空間的 RDS MySQL 資料庫」
+          </li>
+          <li>點擊「估算價格」按鈕，讓擴展程式自動填寫相應的表單</li>
+          <li>查看生成的價格估算，並可以進一步調整細節</li>
+        </ol>
+
+        <div class="button-container">
+          <a href="https://calculator.aws" target="_blank" class="button"
+            >前往 AWS Pricing Calculator</a
+          >
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>AWS Pricing Calculator 助手 v1.0</p>
+        <p>此擴展程式非 Amazon Web Services 官方產品</p>
+      </div>
+    </div>
+  </body>
+</html>
