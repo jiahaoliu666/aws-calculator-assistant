@@ -3,9 +3,39 @@ document.addEventListener("DOMContentLoaded", function () {
   const processBtn = document.getElementById("processBtn");
   const statusMessage = document.getElementById("statusMessage");
   const loadingIndicator = document.getElementById("loadingIndicator");
+  const pinButton = document.getElementById("pinButton");
 
-  // 獲取當前服務標籤元素（添加這一行）
+  // 獲取當前服務標籤元素
   const currentServiceElement = document.getElementById("currentService");
+
+  // 檢查是否已經固定
+  chrome.storage.local.get(["isPinned"], function (result) {
+    if (result.isPinned) {
+      pinButton.classList.add("active");
+    }
+  });
+
+  // 處理固定按鈕點擊
+  pinButton.addEventListener("click", function () {
+    // 切換固定狀態
+    chrome.storage.local.get(["isPinned"], function (result) {
+      const newPinnedState = !result.isPinned;
+      chrome.storage.local.set({ isPinned: newPinnedState }, function () {
+        pinButton.classList.toggle("active", newPinnedState);
+
+        // 發送消息至內容腳本更新固定狀態
+        chrome.tabs.query(
+          { active: true, currentWindow: true },
+          function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {
+              action: "updatePinnedState",
+              isPinned: newPinnedState,
+            });
+          }
+        );
+      });
+    });
+  });
 
   // 檢查當前頁面是否為 AWS Pricing Calculator
   chrome.tabs.query(
@@ -68,6 +98,23 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   );
+
+  // 處理彈出視窗關閉時，確保固定狀態
+  window.addEventListener("unload", function () {
+    chrome.storage.local.get(["isPinned"], function (result) {
+      if (result.isPinned) {
+        // 如果是固定狀態，發送消息到內容腳本確保面板保持顯示
+        chrome.tabs.query(
+          { active: true, currentWindow: true },
+          function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {
+              action: "ensurePanelVisibleWhenPinned",
+            });
+          }
+        );
+      }
+    });
+  });
 
   // 處理按鈕點擊事件
   processBtn.addEventListener("click", async function () {

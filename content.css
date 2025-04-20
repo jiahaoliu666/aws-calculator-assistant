@@ -28,3 +28,301 @@
 #aws-calculator-assistant div {
   font-family: 'Arial', sans-serif !important;
 } 
+
+/* 基本元素容器樣式 */
+.assistant-toggle {
+  cursor: pointer;
+  padding: 10px 15px;
+  background: #232f3e;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.assistant-toggle:hover {
+  background: #2c3c4e;
+}
+
+.assistant-panel {
+  width: 350px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.assistant-panel.hidden {
+  display: none;
+}
+
+/* 頭部樣式 */
+.assistant-header {
+  background: #232f3e;
+  color: white;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.assistant-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.close-btn, .pin-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pin-btn.active {
+  color: #ff9900;
+}
+
+/* 內容區域樣式 */
+.assistant-content {
+  padding: 15px;
+}
+
+.current-service-display {
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #333;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.input-area {
+  margin-bottom: 15px;
+}
+
+.input-area textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.process-btn {
+  background: #ff9900;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 500;
+}
+
+.process-btn:hover {
+  background: #e88a00;
+}
+
+/* 狀態區域樣式 */
+.status-area {
+  min-height: 20px;
+}
+
+.error-message {
+  color: #d13212;
+  background: #fcf3f3;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.success-message {
+  color: #1d8102;
+  background: #f0f7f0;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+/* 加載指示器 */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 153, 0, 0.3);
+  border-radius: 50%;
+  border-top-color: #ff9900;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 固定狀態樣式 */
+#aws-calculator-assistant.pinned .assistant-panel {
+  display: block !important;
+}
+
+/* 結果摘要樣式 */
+.result-summary {
+  background: #f9f9f9;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+.result-summary h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #232f3e;
+  font-size: 14px;
+}
+
+.service-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+.service-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.success-icon, .error-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  margin-right: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.success-icon {
+  background: #1d8102;
+  position: relative;
+}
+
+.success-icon:after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(-45deg);
+  top: 6px;
+  left: 5px;
+}
+
+.error-icon {
+  background: #d13212;
+  position: relative;
+}
+
+.error-icon:after {
+  content: 'x';
+  color: white;
+  position: absolute;
+  font-size: 12px;
+  line-height: 1;
+  top: 2px;
+  left: 6px;
+}
+
+.service-name {
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.service-list li.error .service-name {
+  color: #d13212;
+}
+
+.error-message {
+  color: #d13212;
+  font-size: 12px;
+}
+
+/* 優化提示樣式 */
+.optimization-tips {
+  background: #f0f7ff;
+  border-radius: 6px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+}
+
+.optimization-tips h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #0073bb;
+  font-size: 14px;
+}
+
+.optimization-tips ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.optimization-tips li {
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #333;
+}
+
+/* 操作按鈕區域 */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.edit-btn, .new-query-btn {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-weight: 500;
+}
+
+.edit-btn {
+  background: #eee;
+  color: #333;
+}
+
+.edit-btn:hover {
+  background: #e0e0e0;
+}
+
+.new-query-btn {
+  background: #ff9900;
+  color: white;
+}
+
+.new-query-btn:hover {
+  background: #e88a00;
+} 

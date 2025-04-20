@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AWS Pricing Calculator 助手設置</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #232f3e;
+        margin-top: 0;
+        font-size: 28px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #232f3e;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .api-key-input {
+        display: flex;
+      }
+
+      .api-key-input input {
+        flex-grow: 1;
+        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .toggle-visibility {
+        background: #eee;
+        border: 1px solid #ddd;
+        border-left: none;
+        border-radius: 0 4px 4px 0;
+        padding: 0 15px;
+        cursor: pointer;
+      }
+
+      .description {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #666;
+      }
+
+      button {
+        background-color: #ff9900;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: #e88a00;
+      }
+
+      .status {
+        margin-top: 20px;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .success {
+        background-color: #f0f7f0;
+        color: #1d8102;
+        border: 1px solid #c6e7c6;
+      }
+
+      .error {
+        background-color: #fcf3f3;
+        color: #d13212;
+        border: 1px solid #f7dcdc;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .help-section {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+      }
+
+      .help-section h2 {
+        font-size: 20px;
+        color: #232f3e;
+      }
+
+      .help-section p,
+      .help-section li {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #444;
+      }
+
+      .help-section a {
+        color: #0073bb;
+        text-decoration: none;
+      }
+
+      .help-section a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>AWS Pricing Calculator 助手設置</h1>
+
+      <div class="form-group">
+        <label for="apiKey">OpenAI API 金鑰</label>
+        <div class="api-key-input">
+          <input type="password" id="apiKey" placeholder="sk-..." />
+          <button class="toggle-visibility" id="toggleVisibility">顯示</button>
+        </div>
+        <div class="description">
+          此金鑰用於處理自然語言請求。您可以從
+          <a href="https://platform.openai.com/" target="_blank">OpenAI 平台</a>
+          獲取 API 金鑰。
+        </div>
+      </div>
+
+      <button id="saveButton">保存設置</button>
+
+      <div id="statusMessage" class="status hidden"></div>
+
+      <div class="help-section">
+        <h2>如何獲取 OpenAI API 金鑰</h2>
+        <ol>
+          <li>
+            前往
+            <a href="https://platform.openai.com/" target="_blank"
+              >OpenAI 平台</a
+            >
+            並登入您的帳戶
+          </li>
+          <li>點擊右上角的頭像，然後選擇 "View API keys"</li>
+          <li>點擊 "Create new secret key" 按鈕</li>
+          <li>將生成的 API 金鑰複製並粘貼到上方輸入框</li>
+          <li>點擊 "保存設置" 按鈕</li>
+        </ol>
+        <p>
+          注意：請妥善保管您的 API 金鑰，不要分享給他人。API
+          使用會產生費用，詳情請查看
+          <a href="https://openai.com/pricing" target="_blank"
+            >OpenAI 價格頁面</a
+          >。
+        </p>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const apiKeyInput = document.getElementById("apiKey");
+        const toggleVisibilityBtn = document.getElementById("toggleVisibility");
+        const saveButton = document.getElementById("saveButton");
+        const statusMessage = document.getElementById("statusMessage");
+
+        // 加載已保存的 API 金鑰
+        chrome.runtime.sendMessage(
+          { action: "getApiKey" },
+          function (response) {
+            if (response && response.success && response.apiKey) {
+              apiKeyInput.value = response.apiKey;
+            }
+          }
+        );
+
+        // 處理顯示/隱藏密碼
+        toggleVisibilityBtn.addEventListener("click", function () {
+          if (apiKeyInput.type === "password") {
+            apiKeyInput.type = "text";
+            toggleVisibilityBtn.textContent = "隱藏";
+          } else {
+            apiKeyInput.type = "password";
+            toggleVisibilityBtn.textContent = "顯示";
+          }
+        });
+
+        // 保存設置
+        saveButton.addEventListener("click", function () {
+          const apiKey = apiKeyInput.value.trim();
+
+          if (!apiKey) {
+            showStatus("請輸入有效的 API 金鑰", "error");
+            return;
+          }
+
+          if (!apiKey.startsWith("sk-")) {
+            showStatus('API 金鑰格式不正確，應以 "sk-" 開頭', "error");
+            return;
+          }
+
+          // 保存 API 金鑰
+          chrome.runtime.sendMessage(
+            { action: "saveApiKey", apiKey: apiKey },
+            function (response) {
+              if (response && response.success) {
+                showStatus("設置已保存成功！", "success");
+              } else {
+                showStatus(
+                  "保存設置時發生錯誤：" + (response?.error || "未知錯誤"),
+                  "error"
+                );
+              }
+            }
+          );
+        });
+
+        // 顯示狀態消息
+        function showStatus(message, type) {
+          statusMessage.textContent = message;
+          statusMessage.className = "status " + type;
+          statusMessage.classList.remove("hidden");
+
+          // 5秒後自動隱藏成功消息
+          if (type === "success") {
+            setTimeout(function () {
+              statusMessage.classList.add("hidden");
+            }, 5000);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
